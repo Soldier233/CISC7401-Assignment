@@ -16,7 +16,7 @@ def avg_reward_line_plot(rewards_per_episode, num_episodes):
 
 class SARSA(TD_Agent):
     def __init__(self, env, args):
-        self.env = env 
+        self.env = env
         self.n_actions = env.action_space.n
         self.n_states = env.observation_space.n
         self.alpha = args.alpha
@@ -33,9 +33,13 @@ class SARSA(TD_Agent):
         # Hints:In testing mode, always select the action with the highest Q-value. 
         # In training mode, randomly select an action with a probability defined by epsilon, 
         # or otherwise select the best Q-value action. Finally, return the chosen action.
-
-        pass 
-    
+        if test:
+            return np.argmax(self.Q[state])
+        else:
+            if np.random.rand() < self.epsilon:
+                return np.random.choice(self.n_actions)
+            else:
+                return np.argmax(self.Q[state])
 
     def train(self):
         self.Q = np.zeros((self.n_states, self.n_actions))
@@ -59,10 +63,9 @@ class SARSA(TD_Agent):
                     reward = -1
                 
                 # Student Implementation: Sarsa Update
-                # Hints: Q(s, a) ← Q(s, a) + α * [r + γ * Q(s', a') - Q(s, a)]  
+                # Hints: Q(s, a) ← Q(s, a) + α * [r + γ * Q(s', a') - Q(s, a)]
+                self.Q[state, action] += self.alpha * (reward + self.gamma * self.Q[next_state, next_action] - self.Q[state, action])
 
-
-                
                 state = next_state
                 action = next_action
             
@@ -74,6 +77,3 @@ class SARSA(TD_Agent):
         
         np.save(self.save_sa_file, self.Q)
         avg_reward_line_plot(rewards_per_episode, self.num_episodes)
-        
-        
-    

@@ -36,7 +36,13 @@ class Q_Learning(TD_Agent):
         # Hints:In testing mode, always select the action with the highest Q-value. 
         # In training mode, randomly select an action with a probability defined by epsilon, 
         # or otherwise select the best Q-value action. Finally, return the chosen action.
-        pass 
+        if test:
+            return np.argmax(self.Q[state])
+        else:
+            if np.random.rand() < self.epsilon:
+                return np.random.choice(self.n_actions)
+            else:
+                return np.argmax(self.Q[state])
     
 
     def train(self):
@@ -57,7 +63,8 @@ class Q_Learning(TD_Agent):
                 
                 # Student Implementation: Q_learning_update
                 # Hints: Q(s, a) ← Q(s, a) + α * [r + γ * max(Q(s', a')) - Q(s, a)]
-                
+                best_next_q = np.max(self.Q[next_state])
+                self.Q[state, action] += self.alpha * (reward + self.gamma * best_next_q - self.Q[state, action])
                 
                 state = next_state
             
