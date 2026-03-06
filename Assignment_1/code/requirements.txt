@@ -1,0 +1,9 @@
+# Required Python Packages
+
+numpy==1.23.5       # Fundamental package for numerical computations
+
+argparse==1.1       # Parser for command-line options, arguments, and sub-commands
+
+gym==0.21.0         # Toolkit for developing and comparing reinforcement learning algorithms
+
+matplotlib==3.5.2   # Comprehensive library for creating static, animated, and interactive visualizations in Python
