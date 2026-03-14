@@ -1,2 +1,6 @@
 *.iml
 .idea
+/.run/
+/Assignment_1/code/checkpoints/
+/Assignment_1/code/avg_reward_q_learning_line.png
+/Assignment_1/code/avg_reward_sarsa_line.png
